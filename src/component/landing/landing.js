@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
+import axios from "axios";
 
 const Landing = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/job");
+        setData(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // console.log(data);
   return (
     <div>
       {/* Navbar */}
@@ -193,124 +210,54 @@ const Landing = () => {
         <div className="container py-5">
           <div className="row g-4">
             {/* Card 1 */}
-            <div className="col-md-6 col-lg-4">
-              <div className="card border-1 shadow-md position-relative">
-                <div className="d-flex gap-2 bg-white p-2">
-                  <div
-                    className="border border-secondary rounded d-flex align-items-center justify-content-center"
-                    style={{ width: "5rem", height: "5rem" }}
-                  >
-                    <img src="/logo192.png" alt="Logo" className="img-fluid" />
-                  </div>
-                  <div className="align-self-center">
-                    <h5 className="fw-bold mb-0">Frontend Developer</h5>
-                    <h6 className="fw-semibold text-muted">
-                      PT Bumi Amartha Teknologi Mandiri
-                    </h6>
-                  </div>
-                </div>
-                {/* Card Body */}
-                <div className="p-2">
-                  <div className="mb-2">
-                    <div className="d-flex gap-2 align-items-center">
-                      <span>Jakarta</span>
+            {data.map((item) => (
+              <div className="col-md-6 col-lg-4" key={item.id}>
+                <div className="card border-1 shadow-md position-relative">
+                  <div className="d-flex gap-2 bg-white p-2">
+                    <div
+                      className="border border-secondary rounded d-flex align-items-center justify-content-center"
+                      style={{ width: "5rem", height: "5rem" }}
+                    >
+                      <img
+                        src={item.path}
+                        alt={item.jobTitle}
+                        className="img-fluid"
+                      />
                     </div>
-                    <div className="d-flex gap-2 align-items-center">
-                      <span>Rp. 5.000.000</span>
-                    </div>
-                    <div className="d-flex gap-2 align-items-center">
-                      <span>Internship</span>
+                    <div className="align-self-center">
+                      <h5 className="fw-bold mb-0">{item.jobTitle}</h5>
+                      <h6 className="fw-semibold text-muted">
+                        {item.fullname}
+                      </h6>
                     </div>
                   </div>
-                  <div className="bg-dark p-2 rounded">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <span className="text-white small">10 Januari 2025</span>
-                      <span className="badge bg-secondary">Junior Intern</span>
+                  {/* Card Body */}
+                  <div className="p-2">
+                    <div className="mb-2">
+                      <div className="d-flex gap-2 align-items-center">
+                        <span>Jakarta</span>
+                      </div>
+                      <div className="d-flex gap-2 align-items-center">
+                        <span>Rp. {item.sallary}</span>
+                      </div>
+                      <div className="d-flex gap-2 align-items-center">
+                        <span>{item.jobTypeName}</span>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="col-md-6 col-lg-4">
-              <div className="card border-1 shadow-md position-relative">
-                <div className="d-flex gap-2 bg-white p-2">
-                  <div
-                    className="border border-secondary rounded d-flex align-items-center justify-content-center"
-                    style={{ width: "5rem", height: "5rem" }}
-                  >
-                    <img src="/logo192.png" alt="Logo" className="img-fluid" />
-                  </div>
-                  <div className="align-self-center">
-                    <h5 className="fw-bold mb-0">Frontend Developer</h5>
-                    <h6 className="fw-semibold text-muted">
-                      PT Bumi Amartha Teknologi Mandiri
-                    </h6>
-                  </div>
-                </div>
-                {/* Card Body */}
-                <div className="p-2">
-                  <div className="mb-2">
-                    <div className="d-flex gap-2 align-items-center">
-                      <span>Jakarta</span>
-                    </div>
-                    <div className="d-flex gap-2 align-items-center">
-                      <span>Rp. 5.000.000</span>
-                    </div>
-                    <div className="d-flex gap-2 align-items-center">
-                      <span>Internship</span>
-                    </div>
-                  </div>
-                  <div className="bg-dark p-2 rounded">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <span className="text-white small">10 Januari 2025</span>
-                      <span className="badge bg-secondary">Junior Intern</span>
+                    <div className="bg-dark p-2 rounded">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <span className="text-white small">
+                          10 Januari 2025
+                        </span>
+                        <span className="badge bg-secondary">
+                          Junior Intern
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="col-md-6 col-lg-4">
-              <div className="card border-1 shadow-md position-relative">
-                <div className="d-flex gap-2 bg-white p-2">
-                  <div
-                    className="border border-secondary rounded d-flex align-items-center justify-content-center"
-                    style={{ width: "5rem", height: "5rem" }}
-                  >
-                    <img src="/logo192.png" alt="Logo" className="img-fluid" />
-                  </div>
-                  <div className="align-self-center">
-                    <h5 className="fw-bold mb-0">Frontend Developer</h5>
-                    <h6 className="fw-semibold text-muted">
-                      PT Bumi Amartha Teknologi Mandiri
-                    </h6>
-                  </div>
-                </div>
-                {/* Card Body */}
-                <div className="p-2">
-                  <div className="mb-2">
-                    <div className="d-flex gap-2 align-items-center">
-                      <span>Jakarta</span>
-                    </div>
-                    <div className="d-flex gap-2 align-items-center">
-                      <span>Rp. 5.000.000</span>
-                    </div>
-                    <div className="d-flex gap-2 align-items-center">
-                      <span>Internship</span>
-                    </div>
-                  </div>
-                  <div className="bg-dark p-2 rounded">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <span className="text-white small">10 Januari 2025</span>
-                      <span className="badge bg-secondary">Junior Intern</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
